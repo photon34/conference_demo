@@ -40,8 +40,11 @@ public class SpeakerController {
 
     @PutMapping(value = "{id}")
     public Speaker update(@PathVariable Long id, @RequestBody Speaker speaker){
-        Speaker existingSpeaker = speakerRespository.findById(id).orElseThrow(() -> new RuntimeException("Speaker not found"));
+        Speaker existingSpeaker = speakerRespository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Speaker not found"));
+
         BeanUtils.copyProperties(speaker, existingSpeaker, "speaker_id");
+
         return speakerRespository.saveAndFlush(existingSpeaker);
     }
 }
